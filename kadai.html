@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>課題3（上級）コーポレートサイト｜コーディング練習テキスト</title>
+  <link rel="stylesheet" href="../assets/text.css">
+</head>
+<body>
+
+<header class="t-header">
+  <div class="t-header__inner">
+    <a class="t-header__brand" href="../index.html"><span>新人研修</span>コーディング練習テキスト</a>
+    <nav class="t-header__nav">
+      <a href="../index.html">目次</a>
+      <a href="../lesson1/kadai.html">課題1 初級</a>
+      <a href="../lesson2/kadai.html">課題2 中級</a>
+      <a href="kadai.html" class="is-current">課題3 上級</a>
+    </nav>
+  </div>
+</header>
+
+<section class="t-hero">
+  <div class="t-hero__inner">
+    <span class="t-hero__label">LEVEL 3 ／ 上級</span>
+    <h1>課題3：企業のコーポレートサイトを作る<br><small style="font-size:.6em;opacity:.85">株式会社ネクストブリッジ</small></h1>
+    <p>実務でよくある「コーポレートサイトのTOPページ」を再現します。固定ヘッダー、自動再生スライダー、数字のカウントアップ、タブによる絞り込み、スクロール連動のフェードイン、フォームの入力チェックなど、JavaScriptの機能を8つ実装します。これができれば、実案件のコーディングを任せられるレベルです。</p>
+    <div class="t-hero__meta">
+      <div><strong>使う技術</strong>HTML / CSS / JavaScript（本格的に）</div>
+      <div><strong>JavaScript</strong>8機能（スライダー・IntersectionObserver・バリデーション等）</div>
+      <div><strong>目安時間</strong>10〜14時間</div>
+    </div>
+  </div>
+</section>
+
+<main class="t-main">
+<div class="t-layout">
+
+  <aside class="t-toc">
+    <h2>目次</h2>
+    <ol>
+      <li><a href="#goal">課題のねらい</a></li>
+      <li><a href="#sample">完成見本</a></li>
+      <li><a href="#structure">ページ構成</a></li>
+      <li><a href="#spec">仕様書</a></li>
+      <li><a href="#js">JavaScript要件</a></li>
+      <li><a href="#assets">提供素材</a></li>
+      <li><a href="#steps">作業の進め方</a></li>
+      <li><a href="#hints">ヒント</a></li>
+      <li><a href="#check">チェックリスト</a></li>
+      <li><a href="#after">完成したら</a></li>
+    </ol>
+  </aside>
+
+  <div>
+
+    <section class="t-section" id="goal">
+      <h2>課題のねらい</h2>
+      <ul>
+        <li><strong>固定ヘッダー</strong>（position: fixed）と、その分のページ上部の余白・ページ内リンクのずれ対策ができる</li>
+        <li>スライドを<strong>重ねて opacity で切り替える</strong>フェード式スライダーを、setInterval で自動再生できる</li>
+        <li><strong>IntersectionObserver</strong> で「画面に入ったら○○する」を実装できる（フェードイン・カウントアップ）</li>
+        <li><strong>data属性</strong>を使って、タブによる絞り込みや、フォームのチェック内容をHTMLから読み取れる</li>
+        <li>フォームの<strong>入力チェック（バリデーション）</strong>を、エラー表示・再チェック・送信完了まで含めて実装できる</li>
+        <li>これまでの課題より<strong>要素数が多いページ</strong>を、崩れずに・破綻しないCSS設計で仕上げられる</li>
+      </ul>
+      <div class="box box--info">
+        <strong>この課題の心構え</strong>
+        <p>機能が多いので、一度に全部やろうとせず「1機能ずつ動くところまで作って確認」を繰り返してください。JavaScriptは <code>console.log()</code> で値を確認しながら進めるのがコツです。仕様書は長いですが、実務のデザインカンプ＋指示書も同じくらいの情報量です。</p>
+      </div>
+    </section>
+
+    <section class="t-section" id="sample">
+      <h2>完成見本</h2>
+      <div class="preview">
+        <div class="preview__bar">
+          <span><span class="dots"><i></i><i></i><i></i></span>lesson3/sample/index.html</span>
+          <span class="preview__sizes">
+            <button type="button" data-size="pc" class="is-active">PC表示</button>
+            <button type="button" data-size="sp">スマホ表示（375px）</button>
+          </span>
+        </div>
+        <div class="preview__frame">
+          <iframe src="sample/index.html" title="課題3 完成見本"></iframe>
+        </div>
+      </div>
+      <a class="btn btn--accent" href="sample/index.html" target="_blank">完成見本を別タブで開く</a>
+      <div class="box box--warn">
+        <strong>観察ポイント</strong>
+        <ul>
+          <li>ページを読み込んで5秒待つとスライドが切り替わる。矢印・ドットでも切り替わる</li>
+          <li>スクロールするとヘッダーに影が付き、各セクションがふわっと下から現れる</li>
+          <li>「数字で見る」が画面に入ると数字が増えていく</li>
+          <li>実績のタブをクリックすると絞り込まれる</li>
+          <li>フォームを空のまま送信するとエラーが出る。正しく入力して送信すると完了メッセージに切り替わる</li>
+          <li>スマホ幅では、ハンバーガーメニューが<strong>ヘッダーの下から全画面で</strong>フェードインする（課題2のドロワー型とは違う）</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="t-section" id="structure">
+      <h2>ページ構成</h2>
+      <div class="wire">
+        <div class="wire__row"><div class="wire__box">① 固定ヘッダー（ロゴ2段 ＋ ナビ5項目 ＋「お問い合わせ」ボタン）</div></div>
+        <div class="wire__row"><div class="wire__box wire__box--tall">② ヒーロースライダー（3枚・自動再生・矢印・ドット）</div></div>
+        <div class="wire__row"><div class="wire__box wire__box--tall">③ 数字で見る（リード文 ＋ 4つの数字カード）</div></div>
+        <div class="wire__row"><div class="wire__box wire__box--tall">④ 事業内容（アイコン付きカード 3列）</div></div>
+        <div class="wire__row"><div class="wire__box wire__box--tall">⑤ 実績（タブ4つ ＋ カード 3列 × 2行）</div></div>
+        <div class="wire__row"><div class="wire__box wire__box--tall">⑥ ニュース（リスト4件 ＋ ボタン）</div></div>
+        <div class="wire__row"><div class="wire__box wire__box--tall">⑦ 会社概要（左：画像 ／ 右：テーブル）</div></div>
+        <div class="wire__row"><div class="wire__box">⑧ 採用CTA（グラデーション背景 ＋ ボタン2つ）</div></div>
+        <div class="wire__row"><div class="wire__box wire__box--tall">⑨ お問い合わせフォーム（入力チェック付き）</div></div>
+        <div class="wire__row"><div class="wire__box">⑩ フッター（3カラム ＋ コピーライト）</div></div>
+      </div>
+      <h3>画面幅による変化</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <thead><tr><th>幅</th><th>変化</th></tr></thead>
+          <tbody>
+            <tr><td>1024px以上</td><td>基本レイアウト</td></tr>
+            <tr><td>768〜1023px</td><td>ナビの間隔が狭くなる（20px・14px）。数字カードが2列。事業内容が1列（最大幅600px中央）。実績が2列。会社概要が縦並び（画像100%幅）</td></tr>
+            <tr><td>767px以下</td><td>ヘッダー64px、ハンバーガーメニュー。スライダー高さ460px。数字カードは2列のまま小さく。実績1列。ニュースはタイトルが2行目に折り返す。採用ボタン縦並び。フッター縦並び。ボタンは幅100%（スライダー内のボタンは除く）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="t-section" id="spec">
+      <h2>仕様書</h2>
+
+      <h3>共通</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>フォント</th><td>ゴシック体 16px 行間 1.8。見出しは太字</td></tr>
+            <tr><th>文字色</th><td><i class="swatch" style="background:#222"></i>#222222 ／ 補足文 <i class="swatch" style="background:#6b7280"></i>#6b7280 ／ カード本文 <i class="swatch" style="background:#444"></i>#444444</td></tr>
+            <tr><th>メインカラー（ネイビー）</th><td><i class="swatch" style="background:#1f3a5f"></i>#1f3a5f</td></tr>
+            <tr><th>アクセントカラー（ブルー）</th><td><i class="swatch" style="background:#4b7bd1"></i>#4b7bd1</td></tr>
+            <tr><th>背景色（薄いブルーグレー）</th><td><i class="swatch" style="background:#f3f6fa"></i>#f3f6fa（事業内容・ニュースの背景、数字カード）</td></tr>
+            <tr><th>罫線</th><td><i class="swatch" style="background:#e5e7eb"></i>#e5e7eb ／ 入力欄の枠 <i class="swatch" style="background:#d1d5db"></i>#d1d5db</td></tr>
+            <tr><th>エラー色</th><td><i class="swatch" style="background:#dc2626"></i>#dc2626（必須ラベル・エラー文字・エラー時の枠）、エラー時の入力欄背景 <i class="swatch" style="background:#fef2f2"></i>#fef2f2</td></tr>
+            <tr><th>コンテンツ幅</th><td>最大 1120px、左右内側余白 24px</td></tr>
+            <tr><th>ブレークポイント</th><td>1023px以下 ／ 767px以下</td></tr>
+            <tr><th>セクション上下余白</th><td>PC 96px ／ スマホ 64px</td></tr>
+            <tr><th>セクション見出し</th><td>日本語 32px 太字（スマホ 24px）、その下に英語 13px 太字 アクセント色 文字間 0.2em 上余白 8px。中央寄せ、下余白 48px（スマホ 32px）</td></tr>
+            <tr><th>リード文</th><td>中央寄せ、上余白 −24px（見出しとの間を詰める）、下余白 48px。スマホ：14px 左寄せ</td></tr>
+            <tr><th>ボタン共通</th><td>最小幅 200px、内側余白 上下14px 左右32px、枠線 2px、角丸 4px、太字、中央寄せ。スマホは幅100%。種類：白（白背景・ネイビー文字 → ホバーで透明背景・白文字）／ ゴースト（白枠・白文字 → 白背景・ネイビー文字）／ アウトライン（ネイビー枠・ネイビー文字 → ネイビー背景・白文字）／ プライマリ（ネイビー背景・白文字 → アクセント色背景）</td></tr>
+            <tr><th>固定ヘッダー対策</th><td>body 上部にヘッダーの高さ分の余白（80px / スマホ 64px）。ページ内リンクで見出しがヘッダーに隠れないよう <code>scroll-padding-top</code> も設定</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>① ヘッダー（固定）</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>配置</th><td><strong>画面上部に固定</strong>、幅100%、高さ 80px（スマホ 64px）、白背景。<strong>50px以上スクロールしたら影</strong> <code>0 2px 12px rgba(0,0,0,0.1)</code> が0.3秒で付く</td></tr>
+            <tr><th>ロゴ</th><td>2段。上「NEXT BRIDGE」 22px（スマホ 18px）太字 ネイビー 文字間 0.08em ／ 下「株式会社ネクストブリッジ」 11px（スマホ 10px）#6b7280。行間 1.2</td></tr>
+            <tr><th>ナビ（PC）</th><td>事業内容 / 実績 / ニュース / 会社概要 / 採用情報 の5つ ＋「お問い合わせ」ボタン。15px 太字、間隔 28px。<strong>ホバーで2pxのアクセント色の下線が左から伸びる</strong>（0.3秒）</td></tr>
+            <tr><th>「お問い合わせ」ボタン</th><td>ネイビー背景・白文字、内側余白 上下10px 左右24px、角丸 4px。ホバーでアクセント色背景（下線アニメは付けない）</td></tr>
+            <tr><th>ナビ（スマホ）</th><td>ハンバーガーボタン（課題2と同じ作り、線はネイビー）。メニューは<strong>ヘッダーの真下（top: 64px）から画面いっぱい</strong>の白い全画面メニューが、上から16pxずれた状態から0.3秒でフェードイン。項目は縦に並び、各項目 16px 上下内側余白 16px 下に罫線。最後の「お問い合わせ」はボタンのまま幅100%、上余白 24px</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>② ヒーロースライダー</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>高さ</th><td>600px（スマホ 460px）</td></tr>
+            <tr><th>スライド</th><td>3枚。それぞれ背景画像（slide1〜3.svg、cover・中央）＋ ネイビー45%の半透明 <code>rgba(15,30,55,0.45)</code>。3枚を<strong>同じ位置に重ね</strong>、表示中の1枚だけ opacity 1、他は 0。切り替えは <strong>1秒</strong>のフェード</td></tr>
+            <tr><th>テキスト</th><td>コンテンツ幅の中で左寄せ・上下中央、白。サブ 14px 文字間 0.2em 下余白 16px ／ 見出し 48px（スマホ 30px）行間 1.4 下余白 24px ／ 説明 16px（スマホ 14px）下余白 40px（スマホ 32px）／ 白ボタン。<strong>1枚目の見出しだけ h1</strong>、2・3枚目は h2</td></tr>
+            <tr><th>矢印</th><td>左右端（24px、スマホ 8px）に上下中央で配置。48px（スマホ 36px）の正円、白60%の枠線 1px、白15%の背景、白い「‹」「›」 28px。ホバーで背景 白35%。<code>button</code> で作る</td></tr>
+            <tr><th>ドット</th><td>下端から 24px、中央寄せ、12px の正円 × 3、間隔 12px、白50%。表示中は白100%。<code>button</code> で作る</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <thead><tr><th>枚</th><th>サブ</th><th>見出し</th><th>説明</th><th>ボタン</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>IT SOLUTIONS FOR YOUR BUSINESS</td><td>テクノロジーで、／次の一歩を架ける。</td><td>Web制作からシステム開発、インフラ構築まで。／お客様のビジネスに寄り添うITパートナーです。</td><td>事業内容を見る（#service）</td></tr>
+            <tr><td>2</td><td>WEB DEVELOPMENT</td><td>成果につながる／Webサイトを。</td><td>企画・デザイン・コーディングをワンストップで。／公開後の運用・改善まで伴走します。</td><td>実績を見る（#works）</td></tr>
+            <tr><td>3</td><td>RECRUIT 2027</td><td>一緒に、／未来をつくる仲間へ。</td><td>新卒・中途採用を積極的に行っています。／未経験からのエンジニア育成にも力を入れています。</td><td>採用情報を見る（#recruit）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>③ 数字で見る</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>レイアウト</th><td>Grid 4列（タブレット以下 2列）、間隔 24px（スマホ 16px）</td></tr>
+            <tr><th>カード</th><td>背景 #f3f6fa、角丸 8px、内側余白 上下32px 左右16px（スマホ 24px / 12px）、中央寄せ</td></tr>
+            <tr><th>ラベル</th><td>14px #6b7280 下余白 8px</td></tr>
+            <tr><th>数値</th><td>44px（スマホ 32px）太字 ネイビー 行間 1.2。単位は 16px 左余白 4px</td></tr>
+            <tr><th>内容</th><td>設立 2012年 ／ 従業員数 85名 ／ 導入実績 320社 ／ 顧客満足度 98%。目標値は <code>data-count="2012"</code> のようにHTMLの属性に持たせ、初期表示は 0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>④ 事業内容</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>背景</th><td>#f3f6fa</td></tr>
+            <tr><th>レイアウト</th><td>Grid 3列 間隔 32px。タブレット以下：1列・最大幅 600px 中央</td></tr>
+            <tr><th>カード</th><td>白背景、角丸 8px、内側余白 上下40px 左右32px（スマホ 32px / 24px）、<strong>透明の枠線 2px → ホバーでアクセント色</strong>。カードの高さが揃い、「詳しく見る」が常に下端に来ること</td></tr>
+            <tr><th>アイコン</th><td>64×64px（icon-web / icon-cloud / icon-support.svg）下余白 20px。装飾なので alt は空</td></tr>
+            <tr><th>タイトル</th><td>22px 太字 下余白 12px：Web制作 ／ システム開発 ／ ITインフラ・サポート</td></tr>
+            <tr><th>本文</th><td>15px #444444 下余白 20px</td></tr>
+            <tr><th>リンク</th><td>「詳しく見る →」 14px 太字 アクセント色。矢印は左余白 6px、<strong>ホバーで右に4px動く</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>⑤ 実績</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>タブ</th><td>すべて / Web制作 / システム開発 / インフラ の4つを中央に横並び、間隔 8px、下余白 40px（スマホ 32px）。カプセル型 <code>button</code>：ネイビー枠 1px・白背景・ネイビー文字 14px 太字、内側余白 上下8px 左右24px（スマホ 6px / 16px・13px）。選択中とホバーはネイビー背景・白文字</td></tr>
+            <tr><th>カード</th><td>Grid 3列（タブレット 2列 ／ スマホ 1列）、間隔 縦32px 横24px。画像は 4:3・角丸 8px・下余白 16px・ホバーで透明度 0.8。カテゴリタグ：12px 太字 アクセント色の文字と枠線 1px 角丸 3px 内側余白 左右8px 下余白 8px。タイトル 17px 太字 行間 1.5 下余白 6px。説明 14px #6b7280。カード全体がリンク</td></tr>
+            <tr><th>絞り込み</th><td>各カードに <code>data-category="web"</code> のような属性を持たせ、タブのクリックで一致しないカードを非表示にする</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <thead><tr><th>画像</th><th>カテゴリ</th><th>タイトル</th></tr></thead>
+          <tbody>
+            <tr><td>works1.svg</td><td>Web制作（web）</td><td>製造業A社 コーポレートサイトリニューアル</td></tr>
+            <tr><td>works2.svg</td><td>システム開発（system）</td><td>物流B社 在庫管理システム開発</td></tr>
+            <tr><td>works3.svg</td><td>インフラ（infra）</td><td>医療法人C 社内サーバーのクラウド移行</td></tr>
+            <tr><td>works4.svg</td><td>Web制作（web）</td><td>飲食店D 通販サイト立ち上げ</td></tr>
+            <tr><td>works5.svg</td><td>システム開発（system）</td><td>学習塾E 面談予約管理アプリ</td></tr>
+            <tr><td>works6.svg</td><td>インフラ（infra）</td><td>建設F社 拠点間ネットワーク再構築</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>⑥ ニュース</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>背景</th><td>#f3f6fa</td></tr>
+            <tr><th>リスト</th><td>最大幅 900px 中央、白背景、角丸 8px、内側余白 上下8px 左右32px（スマホ 4px / 20px）。項目の間に 1px の罫線</td></tr>
+            <tr><th>1件</th><td>日付（14px #6b7280、<code>time</code> 要素）・カテゴリ（12px 太字 白文字 幅110px 中央寄せ 角丸 3px）・タイトル を横並び、上下中央、間隔 20px、上下内側余白 20px。カテゴリの色：お知らせ＝ネイビー ／ プレスリリース＝アクセント色 ／ イベント＝#0f9d8a。ホバーでタイトルがアクセント色＋下線<br>スマホ：日付とカテゴリが1行目、タイトルが2行目（15px）に折り返す。カテゴリの幅は自動</td></tr>
+            <tr><th>ボタン</th><td>「ニュース一覧を見る」アウトライン、中央、上余白 40px</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>⑦ 会社概要</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>レイアウト</th><td>画像（幅 440px 角丸 8px）とテーブルを横並び、上揃え、間隔 64px。タブレット以下：縦並び 間隔 32px 画像100%</td></tr>
+            <tr><th>テーブル</th><td>15px。th 幅 120px（スマホ 90px）ネイビー 折り返さない。内側余白 上下16px 左右8px。各行の下に罫線</td></tr>
+            <tr><th>内容</th><td>会社名 / 所在地 / 設立 / 代表者 / 資本金 / 従業員数 / 事業内容（テキストは見本の通り）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>⑧ 採用CTA</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>背景</th><td>グラデーション ネイビー → アクセント色（135deg）、白文字、中央寄せ、上下余白 96px（スマホ 64px）</td></tr>
+            <tr><th>内容</th><td>「RECRUIT」 13px 文字間 0.2em 下余白 12px ／ 見出し（h2）32px（スマホ 24px）下余白 16px ／ 説明文 下余白 40px ／ ボタン「新卒採用」（白）と「中途採用」（ゴースト）を横並び 間隔 16px（スマホ 縦並び）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>⑨ お問い合わせフォーム</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>幅</th><td>最大 720px 中央</td></tr>
+            <tr><th>項目</th><td>会社名（任意）／ お名前（必須）／ メールアドレス（必須・形式チェック）／ 電話番号（任意・半角数字とハイフンのみ）／ お問い合わせ種別（ラジオ4つ：Web制作・システム開発・ITインフラ・その他、必須）／ お問い合わせ内容（textarea 6行・必須）／ 「個人情報の取り扱いに同意する」チェックボックス（必須・中央寄せ）</td></tr>
+            <tr><th>ラベル・必須マーク</th><td>15px 太字 下余白 8px。必須マークは課題2と同じ形（背景 #dc2626）</td></tr>
+            <tr><th>入力欄</th><td>幅100%、内側余白 上下14px 左右16px、枠 1px #d1d5db、角丸 6px、16px、フォーカスで枠がアクセント色。各項目の下余白 28px</td></tr>
+            <tr><th>ラジオ・チェック</th><td>18px、<code>accent-color</code> でネイビーに。ラジオは横並び 間隔 縦12px 横28px、折り返しあり</td></tr>
+            <tr><th>エラー表示</th><td>項目の下に 13px 赤文字のメッセージ（上余白 6px）。エラーの入力欄は枠が赤・背景 #fef2f2。エラーがなければメッセージ用の要素は非表示</td></tr>
+            <tr><th>送信ボタン</th><td>「送信する」プライマリ、最小幅 280px、中央、上余白 40px</td></tr>
+            <tr><th>送信完了</th><td>フォームを非表示にして、「お問い合わせありがとうございます」（22px ネイビー）＋ 説明文 を #f3f6fa 背景・角丸 8px・内側余白 上下48px 左右32px・中央寄せ の枠で表示</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>⑩ フッター</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>背景・余白</th><td>ネイビー、白文字、内側余白 上64px 下24px</td></tr>
+            <tr><th>3カラム</th><td>左（幅2）：ロゴ 22px 太字 文字間 0.08em 下余白 12px ＋ 住所 13px 透明度 0.8 ／ 中（幅1）：「サイトマップ」15px 太字 ＋ リンク4つ ／ 右（幅1）：「採用・お問い合わせ」＋ リンク3つ。間隔 48px。リンク 14px 透明度 0.8 行間隔 8px ホバーで透明度1＋下線。下に白20%の罫線（余白 40px）<br>スマホ：縦並び 間隔 32px</td></tr>
+            <tr><th>コピーライト</th><td>© 2026 NEXT BRIDGE Inc. All Rights Reserved. 12px 中央 透明度 0.7 上余白 24px</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>トップへ戻る・フェードイン</h3>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <tbody>
+            <tr><th>トップへ戻る</th><td>課題2と同じ仕様（色はネイビー）</td></tr>
+            <tr><th>フェードイン</th><td>セクション見出し・リード文・各カード・テーブル・フォームなどに <code>fade-in</code> クラスを付け、初期状態は「透明・24px下にずれた」状態。<strong>画面に入ったら</strong> 0.8秒でふわっと元の位置に現れる。一度表示したら戻らない</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="t-section" id="js">
+      <h2>JavaScript要件<small>8つの機能をすべて実装してください</small></h2>
+
+      <h3>機能1：ヘッダーの影</h3>
+      <p>スクロール量が 50px を超えたらヘッダーに <code>is-scrolled</code> クラスを付け、50px以下なら外す。</p>
+
+      <h3>機能2：ハンバーガーメニュー</h3>
+      <p>課題2と同じ。クラスの付け外しで開閉。リンククリックで閉じる。<code>aria-expanded</code> も切り替える。</p>
+
+      <h3>機能3：スライダー</h3>
+      <ul>
+        <li><code>showSlide(番号)</code> のような「指定した番号のスライドを表示する関数」を1つ作り、スライドとドットの <code>is-active</code> を付け替える</li>
+        <li>5秒ごとに次のスライドへ自動で進む（<code>setInterval</code>）。最後の次は最初に戻る</li>
+        <li>「›」で次へ、「‹」で前へ（最初の前は最後へ）。ドットをクリックするとそのスライドへ</li>
+        <li>矢印・ドットを操作したら、<strong>自動再生のタイマーをリセット</strong>する（操作直後にすぐ切り替わらないように）</li>
+      </ul>
+
+      <h3>機能4：スクロールで表示（フェードイン）</h3>
+      <ul>
+        <li><code>IntersectionObserver</code> を使い、<code>.fade-in</code> の要素が画面に入ったら <code>is-visible</code> クラスを付ける</li>
+        <li>画面下端から10%入ったところで発火させる（<code>rootMargin</code>）</li>
+        <li>一度表示した要素は監視をやめる（<code>unobserve</code>）</li>
+      </ul>
+
+      <h3>機能5：数字のカウントアップ</h3>
+      <ul>
+        <li><code>.count</code> の要素が画面に半分以上入ったら、0から <code>data-count</code> の値まで 1.5秒かけて増やす</li>
+        <li><code>requestAnimationFrame</code> を使い、最初は速く・最後はゆっくり（イージング）にする</li>
+        <li>終わったら必ず目標値ぴったりで止める。一度だけ実行する</li>
+      </ul>
+
+      <h3>機能6：実績のタブ切り替え</h3>
+      <ul>
+        <li>タブの <code>data-filter</code> と、カードの <code>data-category</code> を比較して、一致しないカードに <code>is-hidden</code> を付ける。「すべて」は全部表示</li>
+        <li>クリックしたタブだけ <code>is-active</code> にする</li>
+      </ul>
+
+      <h3>機能7：フォームの入力チェック</h3>
+      <ul>
+        <li>送信時（submit）に <code>preventDefault()</code> で送信を止め、全項目をチェックする</li>
+        <li>チェック内容：必須項目が空 → 「この項目は必須です」／ メール形式が不正 → 「メールアドレスの形式が正しくありません」／ 電話番号に数字とハイフン以外 → 「電話番号は半角数字とハイフンで入力してください」／ 種別未選択 → 「お問い合わせ種別を選択してください」／ 同意なし → 「同意にチェックを入れてください」</li>
+        <li>エラーの項目に <code>is-error</code> クラスを付け、メッセージを表示。<strong>最初のエラー項目までスクロール</strong>する</li>
+        <li>エラー中の項目は、入力（input / change）のたびに再チェックし、直ったらエラーを消す</li>
+        <li>すべてOKならフォームを隠して完了メッセージを表示する（実際の送信は行わない）</li>
+        <li>「どの項目が必須か」「どんなチェックか」は <code>data-required</code> / <code>data-type="email"</code> のようにHTML側の属性で指定し、JSはそれを読んで動く<strong>汎用的な作り</strong>にする（項目ごとにif文を書かない）</li>
+        <li>ブラウザ標準のチェックと二重にならないよう、form に <code>novalidate</code> を付ける</li>
+      </ul>
+
+      <h3>機能8：トップへ戻る</h3>
+      <p>課題2と同じ。</p>
+
+      <div class="box box--info">
+        <strong>使うと良いもの</strong>
+        <p><code>classList.toggle(クラス名, 真偽値)</code> / <code>setInterval</code> / <code>clearInterval</code> / <code>IntersectionObserver</code> / <code>requestAnimationFrame</code> / <code>performance.now()</code> / <code>element.dataset</code> / <code>closest()</code> / <code>正規表現.test()</code> / <code>scrollIntoView()</code> / <code>element.hidden</code></p>
+      </div>
+    </section>
+
+    <section class="t-section" id="assets">
+      <h2>提供素材</h2>
+      <div class="t-table-wrap">
+        <table class="t-table">
+          <thead><tr><th>ファイル</th><th>用途</th><th>サイズ</th></tr></thead>
+          <tbody>
+            <tr><td>slide1.svg 〜 slide3.svg</td><td>スライダーの背景画像</td><td>1600×700</td></tr>
+            <tr><td>icon-web.svg / icon-cloud.svg / icon-support.svg</td><td>事業内容のアイコン</td><td>64×64</td></tr>
+            <tr><td>works1.svg 〜 works6.svg</td><td>実績のカード画像</td><td>800×600</td></tr>
+            <tr><td>company.svg</td><td>会社概要の画像</td><td>800×600</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="t-section" id="steps">
+      <h2>作業の進め方（目安）</h2>
+      <ol class="steps">
+        <li><strong>HTMLをすべて書く（120分）</strong>10ブロック分。data属性（<code>data-count</code>・<code>data-category</code>・<code>data-filter</code>・<code>data-required</code>・<code>data-type</code>）もこの時点で入れる。フォームの完了メッセージも <code>hidden</code> 属性付きで書いておく。</li>
+        <li><strong>共通CSS ＋ PC表示（240分）</strong>ボタンの4種類を先にまとめて作ると後が楽。スライダーは「3枚を重ねて1枚目だけ表示」の状態まで。フェードインは最後にまとめて付ける（先に付けると要素が見えなくて作業しにくい）。</li>
+        <li><strong>タブレット・スマホ表示（120分）</strong></li>
+        <li><strong>JavaScript（240分）</strong>1 → 2 → 8（課題2の復習）→ 3 スライダー → 6 タブ → 4 フェードイン → 5 カウントアップ → 7 フォーム の順がおすすめ。1機能ごとに動作確認とコンソールのエラー確認。</li>
+        <li><strong>チェックリスト・仕上げ（60分）</strong></li>
+      </ol>
+    </section>
+
+    <section class="t-section" id="hints">
+      <h2>ヒント<small>詰まったときだけ開いてください</small></h2>
+
+      <details class="hint">
+        <summary>ヒント1：固定ヘッダーでページ内リンクの見出しが隠れる</summary>
+        <div class="hint__body">
+          <p><code>html { scroll-padding-top: 80px; }</code> を指定すると、ページ内リンクで移動したときにヘッダーの高さ分だけ手前で止まります。body の <code>padding-top: 80px;</code> と合わせて設定します。</p>
+        </div>
+      </details>
+
+      <details class="hint">
+        <summary>ヒント2：スライドを重ねる</summary>
+        <div class="hint__body">
+          <p>スライダーの親に <code>position: relative; height: 600px; overflow: hidden;</code>、各スライドに <code>position: absolute; inset: 0; opacity: 0; transition: opacity 1s;</code>、表示中のスライドだけ <code>.is-active { opacity: 1; z-index: 1; }</code>。矢印とドットは <code>z-index: 2</code> でスライドの上に置きます。</p>
+        </div>
+      </details>
+
+      <details class="hint">
+        <summary>ヒント3：スライダーの「次へ」で最後の次は最初に戻す</summary>
+        <div class="hint__body">
+<pre><code>function showSlide(index) {
+  // 例：3枚のとき  3 → 0、 -1 → 2 になる
+  currentIndex = (index + slides.length) % slides.length;
+  slides.forEach(function (slide, i) {
+    slide.classList.toggle('is-active', i === currentIndex);
+  });
+  // ドットも同じように切り替える
+}</code></pre>
+          <p>自動再生は <code>timerId = setInterval(() =&gt; showSlide(currentIndex + 1), 5000)</code>。矢印を押したときは <code>clearInterval(timerId)</code> してから再度 <code>setInterval</code> するとタイマーがリセットされます。</p>
+        </div>
+      </details>
+
+      <details class="hint">
+        <summary>ヒント4：IntersectionObserver の基本形</summary>
+        <div class="hint__body">
+<pre><code>const observer = new IntersectionObserver(function (entries) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {           // 画面に入った
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);   // もう監視しない
+    }
+  });
+}, { rootMargin: '0px 0px -10% 0px' });
+
+document.querySelectorAll('.fade-in').forEach(function (el) {
+  observer.observe(el);
+});</code></pre>
+        </div>
+      </details>
+
+      <details class="hint">
+        <summary>ヒント5：カウントアップのイージング</summary>
+        <div class="hint__body">
+<pre><code>function countUp(element) {
+  const target = Number(element.dataset.count);
+  const duration = 1500;
+  const start = performance.now();
+
+  function update(now) {
+    const progress = Math.min((now - start) / duration, 1); // 0〜1
+    const eased = 1 - Math.pow(1 - progress, 3);            // 最後ゆっくり
+    element.textContent = Math.floor(target * eased);
+    if (progress &lt; 1) requestAnimationFrame(update);
+    else element.textContent = target;
+  }
+  requestAnimationFrame(update);
+}</code></pre>
+        </div>
+      </details>
+
+      <details class="hint">
+        <summary>ヒント6：タブの絞り込み</summary>
+        <div class="hint__body">
+<pre><code>const filter = button.dataset.filter;          // 'all' / 'web' / ...
+items.forEach(function (item) {
+  const match = filter === 'all' || item.dataset.category === filter;
+  item.classList.toggle('is-hidden', !match);
+});</code></pre>
+        </div>
+      </details>
+
+      <details class="hint">
+        <summary>ヒント7：フォームの汎用チェック関数の考え方</summary>
+        <div class="hint__body">
+          <p>「1つの項目を受け取って、エラーメッセージ（なければ空文字）を決め、表示を更新し、OKなら true を返す」関数 <code>validateField(field)</code> を作ります。送信時は全項目に対してこの関数を呼び、1つでも false があれば送信しません。</p>
+<pre><code>function validateField(field) {
+  const row = field.closest('.form__row');          // 項目全体の枠
+  const errorEl = row.querySelector('.form__error');
+  const type = field.dataset.type || 'text';
+  const required = field.hasAttribute('data-required');
+  let message = '';
+
+  if (type === 'radio') {
+    if (required &amp;&amp; !field.querySelector('input:checked')) message = '...';
+  } else if (type === 'check') {
+    if (required &amp;&amp; !field.checked) message = '...';
+  } else {
+    const value = field.value.trim();
+    if (required &amp;&amp; value === '') message = 'この項目は必須です';
+    else if (type === 'email' &amp;&amp; value &amp;&amp; !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) message = '...';
+    else if (type === 'tel' &amp;&amp; value &amp;&amp; !/^[0-9\-]+$/.test(value)) message = '...';
+  }
+
+  row.classList.toggle('is-error', message !== '');
+  errorEl.textContent = message;
+  return message === '';
+}</code></pre>
+          <p>ラジオボタンは「グループを包む div」に <code>data-required data-type="radio"</code> を付けると、この1つの関数で扱えます。</p>
+        </div>
+      </details>
+
+      <details class="hint">
+        <summary>ヒント8：ナビのホバーで下線が左から伸びる</summary>
+        <div class="hint__body">
+          <p>リンクに <code>position: relative;</code>、<code>::after</code> で幅100%・高さ2pxの線を下端に置き、<code>transform: scaleX(0); transform-origin: left;</code> で隠しておきます。ホバー時に <code>scaleX(1)</code> にすると左から伸びます。</p>
+        </div>
+      </details>
+
+      <details class="hint">
+        <summary>ヒント9：カードの「詳しく見る」を常に下端に揃えたい</summary>
+        <div class="hint__body">
+          <p>カードを <code>display: flex; flex-direction: column;</code> にして、本文の p に <code>flex: 1;</code> を付けると、本文が余った高さを埋めてリンクが下端に揃います（Gridの各セルは自動で同じ高さになります）。</p>
+        </div>
+      </details>
+    </section>
+
+    <section class="t-section" id="check">
+      <h2>チェックリスト</h2>
+      <p class="checklist__progress" data-progress-for="check3"></p>
+      <ul class="checklist" id="check3">
+        <li><label><input type="checkbox"><span>PC・タブレット・スマホの3つの幅で見本と同じレイアウトになり、横スクロールが出ていない</span></label></li>
+        <li><label><input type="checkbox"><span>ヘッダーが固定され、ページ先頭のコンテンツがヘッダーに隠れていない</span></label></li>
+        <li><label><input type="checkbox"><span>ナビからページ内リンクで移動したとき、セクション見出しがヘッダーに隠れない</span></label></li>
+        <li><label><input type="checkbox"><span>50px以上スクロールするとヘッダーに影が付く</span></label></li>
+        <li><label><input type="checkbox"><span>ナビをホバーすると下線が左から伸びる</span></label></li>
+        <li><label><input type="checkbox"><span>スライダーが5秒ごとに1秒のフェードで切り替わり、3枚目の次は1枚目に戻る</span></label></li>
+        <li><label><input type="checkbox"><span>矢印・ドットで切り替えられ、操作後すぐには自動で切り替わらない（タイマーがリセットされる）</span></label></li>
+        <li><label><input type="checkbox"><span>ドットの表示中の色が現在のスライドと一致している</span></label></li>
+        <li><label><input type="checkbox"><span>スクロールすると各要素が下からふわっと現れ、一度表示されたら消えない</span></label></li>
+        <li><label><input type="checkbox"><span>数字が画面に入ると0から増えていき、ぴったり目標値で止まる（2012 に桁区切りが付かない）</span></label></li>
+        <li><label><input type="checkbox"><span>実績のタブで正しく絞り込まれ、「すべて」で全部戻る</span></label></li>
+        <li><label><input type="checkbox"><span>事業内容カードの「詳しく見る」が3枚とも下端に揃っている</span></label></li>
+        <li><label><input type="checkbox"><span>フォームを空で送信すると、必須5項目すべてにエラーが出て、最初のエラーまでスクロールする</span></label></li>
+        <li><label><input type="checkbox"><span>メールに「abc」など不正な値を入れると形式エラーが出る</span></label></li>
+        <li><label><input type="checkbox"><span>エラー中の項目に入力すると、その場でエラーが消える</span></label></li>
+        <li><label><input type="checkbox"><span>すべて正しく入力して送信すると、完了メッセージに切り替わる</span></label></li>
+        <li><label><input type="checkbox"><span>フォームのチェック処理が汎用的で、項目ごとにif文を並べていない</span></label></li>
+        <li><label><input type="checkbox"><span>スマホ幅でハンバーガーメニューが全画面でフェードインし、リンククリックで閉じる</span></label></li>
+        <li><label><input type="checkbox"><span>コンソールにエラー・警告が出ていない</span></label></li>
+        <li><label><input type="checkbox"><span>h1はスライダー1枚目の1つだけ。各セクションの見出しはh2、カード内はh3</span></label></li>
+        <li><label><input type="checkbox"><span>ボタン類（矢印・ドット・タブ・ハンバーガー）はすべて button 要素で、aria-label が付いている</span></label></li>
+        <li><label><input type="checkbox"><span>JSの各機能がコメントで区切られ、変数名・関数名が意味を表している</span></label></li>
+      </ul>
+    </section>
+
+    <section class="t-section" id="after">
+      <h2>完成したら</h2>
+      <p>見本のコードと比べて、次の点を確認しましょう。</p>
+      <ul>
+        <li>スライダーの「表示する関数」を1つにまとめられているか？ 矢印・ドット・自動再生がすべて同じ関数を呼んでいるか？</li>
+        <li>フォームのチェックで、HTMLのdata属性とJSの役割分担がどうなっているか？ 項目を1つ増やすとき、JSを変えずに済むか？</li>
+        <li>CSSの総行数と、メディアクエリで上書きしているプロパティの数。少ないほど「PC側の設計が良い」証拠です</li>
+      </ul>
+      <div class="box box--ok">
+        <strong>3課題おつかれさまでした</strong>
+        <p>ここまでできれば、静的なコーポレートサイトのコーディングは一通り任せられます。次のステップは、実案件のデザインカンプ（Figma）からの数値の読み取り、WordPressなどのCMS化、Sass・ビルドツールの導入です。講師に相談してください。</p>
+      </div>
+      <div class="t-pager">
+        <a class="btn btn--outline" href="../lesson2/kadai.html">← 課題2（中級）へ</a>
+        <a class="btn btn--primary" href="../index.html">目次へ →</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+</main>
+
+<footer class="t-footer">
+  ホームページ制作 コーディング練習テキスト｜新人教育用
+</footer>
+
+<script src="../assets/text.js"></script>
+</body>
+</html>

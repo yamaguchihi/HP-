@@ -1,0 +1,891 @@
+/* ==========================================
+   課題3 完成見本：コーポレートサイト
+   株式会社ネクストブリッジ
+   ========================================== */
+
+/* ---------- リセット・共通 ---------- */
+* {
+  box-sizing: border-box; 
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* 固定ヘッダーの分 */
+}
+
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", Meiryo, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #222222;
+  background-color: #ffffff;
+  padding-top: 80px; /* 固定ヘッダーの分 */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.pc-only {
+  display: inline;
+}
+
+/* 　　ボタン　　 */
+
+.btn {
+  display: inline-block;
+  min-width: 200px;
+  padding: 14px 32px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.btn--white {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #1f3a5f;
+}
+
+.btn--white:hover {
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.btn--ghost {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.btn--ghost:hover {
+  background-color: #ffffff;
+  color: #1f3a5f;
+}
+
+.btn--outline {
+  border-color: #1f3a5f;
+  color: #1f3a5f;
+}
+
+.btn--outline:hover {
+  background-color: #1f3a5f;
+  color: #ffffff;
+}
+
+.btn--primary {
+  background-color: #1f3a5f;
+  border-color: #1f3a5f;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.btn--primary:hover {
+  background-color: #4b7bd1;
+  border-color: #4b7bd1;
+}
+
+
+/* ---------- セクション共通 ---------- */
+.section {
+  padding: 96px 0;
+}
+
+.section__title {
+  font-size: 32px;
+  text-align: center;
+  line-height: 1.4;
+  margin-bottom: 48px;
+}
+
+.section__title span {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #4b7bd1;
+  letter-spacing: 0.2em;
+  margin-top: 8px;
+}
+
+.section__lead {
+  text-align: center;
+  margin: -24px 0 48px;
+}
+
+/* ---------- スクロールで表示（フェードイン） ---------- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- ヘッダー ---------- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: #ffffff;
+  z-index: 100;
+  transition: box-shadow 0.3s;
+}
+
+.header.is-scrolled {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.header__logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.header__logo-en {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1f3a5f;
+  letter-spacing: 0.08em;
+}
+
+.header__logo-ja {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav__list a {
+  font-size: 15px;
+  font-weight: bold;
+  position: relative;
+  padding: 4px 0;
+}
+
+/* ホバーで下線が左から伸びる */
+.nav__list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #4b7bd1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.nav__list a:hover::after {
+  transform: scaleX(1);
+}
+
+.nav__contact {
+  padding: 10px 24px !important;
+  border-radius: 4px;
+  background-color: #1f3a5f;
+  color: #ffffff;
+  transition: background-color 0.3s;
+}
+
+.nav__contact::after {
+  display: none;
+}
+
+.nav__contact:hover {
+  background-color: #4b7bd1;
+}
+
+.menu-btn {
+  display: none;
+}
+
+
+/* ---------- スライダー ---------- */
+.slider {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+}
+
+.slider__list {
+  height: 100%;
+}
+
+.slider__item {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.slider__item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(15, 30, 55, 0.45);
+}
+
+.slider__item.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slider__body {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.slider__sub {
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+}
+
+.slider__title {
+  font-size: 48px;
+  line-height: 1.4;
+  margin-bottom: 24px;
+}
+
+.slider__text {
+  margin-bottom: 40px;
+}
+
+.slider__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 28px;
+  line-height: 1;
+  transition: background-color 0.3s;
+}
+
+.slider__arrow:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+.slider__arrow--prev { left: 24px; }
+.slider__arrow--next { right: 24px; }
+
+.slider__dots {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.slider__dots button {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: background-color 0.3s;
+}
+
+.slider__dots button.is-active {
+  background-color: #ffffff;
+}
+
+/* ---------- 数字で見る ---------- */
+
+.numbers__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.numbers__item {
+  text-align: center;
+  padding: 32px 16px;
+  background-color: #f3f6fa;
+  border-radius: 8px;
+}
+
+.numbers__label {
+  display: block;
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.numbers__value {
+  font-size: 44px;
+  font-weight: bold;
+  color: #1f3a5f;
+  line-height: 1.2;
+}
+
+.numbers__value small {
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+/*　 　事業内容　　　 */
+
+.service{
+  background-color: #f3f6fa;
+}
+
+.service__list{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 32px;
+}
+
+.service__item{
+  background-color: #ffffff;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.3s;
+}
+
+.service__item:hover{
+  border-color: #4b7bd1;
+}
+
+.service__icon{
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+}
+
+.service__item h3{
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.service__item p{
+  font-size: 15px;
+  color: #444444;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.service__link{
+  font-size: 14px;
+  font-weight: bold;
+  color: #4b7bd1;
+}
+
+.service__link span{
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.3s;
+}
+
+.service__link:hover span{
+  transform: translateX(4px);
+}
+
+/* 　　実績　　 */
+.tabs{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.tabs button{
+  padding: 8px 24px ;
+  border: 1px solid #1f3a5f;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #1f3a5f;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tabs button:hover,
+.tabs button.is-active{
+  background-color: #1f3a5f;
+  color: #ffffff;
+}
+
+.works__list{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 32px 24px;
+}
+
+.works__item.is-hidden{
+  display: none;
+}
+
+.works__item img{
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius:8px;
+  margin-bottom: 16px;
+  transition: opacity 0.3s;
+}
+
+.works__item a:hover img{
+  opacity: 0.8;
+}
+
+.works__tag{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  color: #4b7bd1;
+  border: 1px solid #4b7bd1;
+  border-radius: 3px;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.works__item h3{
+  font-size: 17px;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.works__item p{
+  font-size: 14px;
+  color: #6b7280;
+}
+
+
+
+
+
+/*　 ニュース　 */
+
+.news__list a {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.news__list time {
+  font-size: 14px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.news__cat {
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 2px 12px;
+  border-radius: 3px;
+  white-space: nowrap;
+  width: 110px;
+  text-align: center;
+}
+
+.news__cat--info { background-color: #1f3a5f; }
+.news__cat--press { background-color: #4b7bd1; }
+.news__cat--event { background-color: #0f9d8a; }
+
+.news__title {
+  flex: 1;
+  transition: color 0.3s;
+}
+
+.news__list a:hover .news__title {
+  color: #4b7bd1;
+  text-decoration: underline;
+}
+
+.news__more {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* ------会社概要------- */
+.company__inner{
+  display: flex;
+  gap: 64px;
+  align-items: flex-start;
+}
+
+.company__img{
+  width: 440px;
+  flex-shrink: 0px;
+  border-radius: 8px;
+}
+
+.company__table{
+  flex: 1;
+  font-size: 15px;
+  border-collapse: collapse;
+}
+
+.company__table th,
+.company__table td{
+  padding: 16px 8px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: top;
+}
+
+.company__table th{
+  width: 120px;
+  color: #1f3a5f;
+  white-space: nowrap;
+}
+
+/* 　　採用　　 */
+.recruit{
+  background: linear-gradient(135deg, #1f3a5f 0%, #4b7bd1 100%);
+  color: #ffffff;
+  text-align: center;
+  padding: 96px 0;
+}
+
+.recruit__sub{
+  font-size: 13px;
+  letter-spacing: 0.2rem;
+  margin-bottom: 12px;
+}
+
+.recruit__title{
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.recruit__text{
+  margin-bottom: 40px;
+}
+
+.recruit__btns{
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* ---------- お問い合わせフォーム ---------- */
+.form {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.form__row {
+  margin-bottom: 28px;
+}
+
+.form label,
+.form__label {
+  display: block;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.form__required {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #dc2626;
+  padding: 1px 8px;
+  border-radius: 3px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="tel"],
+.form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 16px;
+  color: inherit;
+  transition: border-color 0.3s;
+}
+
+.form input:focus,
+.form textarea:focus {
+  outline: none;
+  border-color: #4b7bd1;
+}
+
+.form textarea {
+  resize: vertical;
+}
+
+/* エラー時 */
+.form .is-error input,
+.form .is-error textarea {
+  border-color: #dc2626;
+  background-color: #fef2f2;
+}
+
+.form__error {
+  display: none;
+  font-size: 13px;
+  color: #dc2626;
+  margin-top: 6px;
+}
+
+.form .is-error .form__error {
+  display: block;
+}
+
+.form__radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+}
+
+.form__radios label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.form__radios input {
+  width: 18px;
+  height: 18px;
+  accent-color: #1f3a5f;
+}
+
+.form__row--agree {
+  text-align: center;
+}
+
+.form__check {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal !important;
+  cursor: pointer;
+}
+
+.form__check input {
+  width: 18px;
+  height: 18px;
+  accent-color: #1f3a5f;
+}
+
+.form__check a {
+  color: #4b7bd1;
+  text-decoration: underline;
+}
+
+.form__submit {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.form__submit .btn {
+  min-width: 280px;
+}
+
+.form__thanks {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  background-color: #f3f6fa;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.form__thanks h3 {
+  font-size: 22px;
+  color: #1f3a5f;
+  margin-bottom: 16px;
+}
+
+
+/* ---------- フッター ---------- */
+.footer{
+  background-color: #1f3a5f;
+  color: #ffffff;
+  padding: 64px 0 24px;
+}
+
+.footer__inner{
+  display: flex;
+  gap: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 24px;
+}
+
+.footer__col{
+  flex: 1;
+}
+
+.footer__col--info{
+  flex: 2;
+  border: 1px solid #d1d5db;
+}
+
+.footer__logo{
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0.08rem;
+  margin-bottom: 12px;
+}
+
+.footer__address{
+  font-size: 13px;
+  opacity: 0.5;
+}
+
+.footer__links li{
+  margin-bottom: 8px;
+}
+
+.footer__links a{
+  font-size: 14px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.footer__links a:hover{
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer__copy{
+  font-size: 12px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+/*　 トップへ戻る 　　*/
+.totop{
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgb(99, 137, 158);
+  color: #ffffff;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 50;
+}
+
+.totop.is-show{
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* ---------- タブレット対応（1023px以下） ---------- */
+@media (max-width: 1023px) {
+
+  .nav__list{
+    gap:20px;
+  }
+
+  .nav__list a{
+    font-size: 14px;
+  }
+
+  .numbers__list{
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .service__list{
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .works__list{
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .company__inner{
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .company__img{
+    width: 100%;
+  }
+
+
+}
+
+/* ---------- スマホ対応（767px以下） ---------- */
+@media (max-width: 767px) {
+
+}

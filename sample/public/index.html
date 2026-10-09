@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>株式会社ネクストブリッジ｜Web制作・システム開発・ITインフラ</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="header" id="header">
+      <div class="container header__inner">
+        <a href="#" class="header__logo">
+          <span class="header__logo-en">NEXT BRIDGE</span>
+          <span class="header__logo-ja">株式会社ネクストブリッジ</span>
+        </a>
+
+        <button
+          type="button"
+          class="menu-btn"
+          id="menuBtn"
+          aria-label="メニューを開く"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav" id="nav">
+          <ul class="nav__list">
+            <li><a href="#service">事業内容</a></li>
+            <li><a href="#works">実績</a></li>
+            <li><a href="#news">ニュース</a></li>
+            <li><a href="#company">会社概要</a></li>
+            <li><a href="#recruit">採用情報</a></li>
+            <li><a href="#contact" class="nav__contact">お問い合わせ</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ヒーロースライダー -->
+      <section class="slider" id="slider">
+        <ul class="slider__list">
+          <li
+            class="slider__item is-active"
+            style="background-image: url(&quot;images/slide1.svg&quot;)"
+          >
+            <div class="container slider__body">
+              <p class="slider__sub">IT SOLUTIONS FOR YOUR BUSINESS</p>
+              <h1 class="slider__title">
+                テクノロジーで、<br />次の一歩を架ける。
+              </h1>
+              <p class="slider__text">
+                Web制作からシステム開発、インフラ構築まで。<br />お客様のビジネスに寄り添うITパートナーです。
+              </p>
+              <a href="#service" class="btn btn--white">事業内容を見る</a>
+            </div>
+          </li>
+          <li
+            class="slider__item"
+            style="background-image: url(&quot;images/slide2.svg&quot;)"
+          >
+            <div class="container slider__body">
+              <p class="slider__sub">WEB DEVELOPMENT</p>
+              <h2 class="slider__title">成果につながる<br />Webサイトを。</h2>
+              <p class="slider__text">
+                企画・デザイン・コーディングをワンストップで。<br />公開後の運用・改善まで伴走します。
+              </p>
+              <a href="#works" class="btn btn--white">実績を見る</a>
+            </div>
+          </li>
+          <li
+            class="slider__item"
+            style="background-image: url(&quot;images/slide3.svg&quot;)"
+          >
+            <div class="container slider__body">
+              <p class="slider__sub">RECRUIT 2027</p>
+              <h2 class="slider__title">一緒に、<br />未来をつくる仲間へ。</h2>
+              <p class="slider__text">
+                新卒・中途採用を積極的に行っています。<br />未経験からのエンジニア育成にも力を入れています。
+              </p>
+              <a href="#recruit" class="btn btn--white">採用情報を見る</a>
+            </div>
+          </li>
+        </ul>
+
+        <button
+          type="button"
+          class="slider__arrow slider__arrow--prev"
+          id="sliderPrev"
+          aria-label="前のスライド"
+        >
+          &lsaquo;
+        </button>
+        <button
+          type="button"
+          class="slider__arrow slider__arrow--next"
+          id="sliderNext"
+          aria-label="次のスライド"
+        >
+          &rsaquo;
+        </button>
+
+        <ul class="slider__dots" id="sliderDots">
+          <li>
+            <button type="button" class="is-active" aria-label="1枚目"></button>
+          </li>
+          <li><button type="button" aria-label="2枚目"></button></li>
+          <li><button type="button" aria-label="3枚目"></button></li>
+        </ul>
+      </section>
+
+      <!-- 数字で見る -->
+      <section class="numbers section">
+        <div class="container">
+          <h2 class="section__title fade-in">
+            数字で見るネクストブリッジ<span>ABOUT US</span>
+          </h2>
+          <p class="section__lead fade-in">
+            2012年の創業以来、茨城県を中心に300社以上のお客様のIT活用を支援してきました。<br
+              class="pc-only"
+            />「技術力」と「伴走力」を強みに、お客様の課題解決に取り組んでいます。
+          </p>
+          <ul class="numbers__list">
+            <li class="numbers__item fade-in">
+              <span class="numbers__label">設立</span>
+              <span class="numbers__value"
+                ><span class="count" data-count="2012">0</span
+                ><small>年</small></span
+              >
+            </li>
+            <li class="numbers__item fade-in">
+              <span class="numbers__label">従業員数</span>
+              <span class="numbers__value"
+                ><span class="count" data-count="85">0</span
+                ><small>名</small></span
+              >
+            </li>
+            <li class="numbers__item fade-in">
+              <span class="numbers__label">導入実績</span>
+              <span class="numbers__value"
+                ><span class="count" data-count="320">0</span
+                ><small>社</small></span
+              >
+            </li>
+            <li class="numbers__item fade-in">
+              <span class="numbers__label">顧客満足度</span>
+              <span class="numbers__value"
+                ><span class="count" data-count="98">0</span
+                ><small>%</small></span
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 事業内容 -->
+      <section class="service section" id="service">
+        <div class="container">
+          <h2 class="section__title fade-in">事業内容<span>SERVICE</span></h2>
+          <ul class="service__list">
+            <li class="service__item fade-in">
+              <img src="images/icon-web.svg" alt="" class="service__icon" />
+              <h3>Web制作</h3>
+              <p>
+                コーポレートサイト、採用サイト、ECサイトなど、目的に合わせたWebサイトを企画から制作・運用までワンストップで対応します。
+              </p>
+              <a href="#" class="service__link">詳しく見る<span>→</span></a>
+            </li>
+            <li class="service__item fade-in">
+              <img src="images/icon-cloud.svg" alt="" class="service__icon" />
+              <h3>システム開発</h3>
+              <p>
+                業務システム、Webアプリケーション、スマートフォンアプリの受託開発。要件定義から保守まで、長くお付き合いできる体制で支援します。
+              </p>
+              <a href="#" class="service__link">詳しく見る<span>→</span></a>
+            </li>
+            <li class="service__item fade-in">
+              <img src="images/icon-support.svg" alt="" class="service__icon" />
+              <h3>ITインフラ・サポート</h3>
+              <p>
+                クラウド移行、ネットワーク構築、セキュリティ対策、社内ITのヘルプデスク。中小企業の「情シス」を丸ごとお任せいただけます。
+              </p>
+              <a href="#" class="service__link">詳しく見る<span>→</span></a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 実績 -->
+      <section class="works section" id="works">
+        <div class="container">
+          <h2 class="section__title fade-in">実績<span>WORKS</span></h2>
+          <ul class="tabs fade-in" id="worksTabs">
+            <li>
+              <button type="button" class="is-active" data-filter="all">
+                すべて
+              </button>
+            </li>
+            <li><button type="button" data-filter="web">Web制作</button></li>
+            <li>
+              <button type="button" data-filter="system">システム開発</button>
+            </li>
+            <li><button type="button" data-filter="infra">インフラ</button></li>
+          </ul>
+          <ul class="works__list" id="worksList">
+            <li class="works__item fade-in" data-category="web">
+              <a href="#">
+                <img
+                  src="images/works1.svg"
+                  alt="製造業A社 コーポレートサイト"
+                />
+                <span class="works__tag">Web制作</span>
+                <h3>製造業A社 コーポレートサイトリニューアル</h3>
+                <p>採用強化を目的に全面リニューアル。応募数が前年比1.8倍に。</p>
+              </a>
+            </li>
+            <li class="works__item fade-in" data-category="system">
+              <a href="#">
+                <img src="images/works2.svg" alt="物流B社 在庫管理システム" />
+                <span class="works__tag">システム開発</span>
+                <h3>物流B社 在庫管理システム開発</h3>
+                <p>Excel管理からWebシステムへ移行し、月40時間の作業を削減。</p>
+              </a>
+            </li>
+            <li class="works__item fade-in" data-category="infra">
+              <a href="#">
+                <img src="images/works3.svg" alt="医療法人C クラウド移行" />
+                <span class="works__tag">インフラ</span>
+                <h3>医療法人C 社内サーバーのクラウド移行</h3>
+                <p>
+                  老朽化したサーバーをクラウドへ移行。BCP対策と運用コスト削減を両立。
+                </p>
+              </a>
+            </li>
+            <li class="works__item fade-in" data-category="web">
+              <a href="#">
+                <img src="images/works4.svg" alt="飲食店D ECサイト" />
+                <span class="works__tag">Web制作</span>
+                <h3>飲食店D 通販サイト立ち上げ</h3>
+                <p>
+                  看板商品のオンライン販売を開始。開設3か月で月商100万円を達成。
+                </p>
+              </a>
+            </li>
+            <li class="works__item fade-in" data-category="system">
+              <a href="#">
+                <img src="images/works5.svg" alt="学習塾E 予約管理アプリ" />
+                <span class="works__tag">システム開発</span>
+                <h3>学習塾E 面談予約管理アプリ</h3>
+                <p>
+                  保護者面談の予約をLINE連携アプリで自動化。電話対応を9割削減。
+                </p>
+              </a>
+            </li>
+            <li class="works__item fade-in" data-category="infra">
+              <a href="#">
+                <img src="images/works6.svg" alt="建設F社 ネットワーク再構築" />
+                <span class="works__tag">インフラ</span>
+                <h3>建設F社 拠点間ネットワーク再構築</h3>
+                <p>5拠点をVPNで接続し、セキュリティポリシーを統一。</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ニュース -->
+      <section class="news section" id="news">
+        <div class="container">
+          <h2 class="section__title fade-in">ニュース<span>NEWS</span></h2>
+          <ul class="news__list fade-in">
+            <li>
+              <a href="#">
+                <time datetime="2026-09-01">2026.09.01</time>
+                <span class="news__cat news__cat--info">お知らせ</span>
+                <span class="news__title"
+                  >2027年度 新卒採用エントリーの受付を開始しました</span
+                >
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <time datetime="2026-08-20">2026.08.20</time>
+                <span class="news__cat news__cat--press">プレスリリース</span>
+                <span class="news__title"
+                  >中小企業向けクラウドバックアップサービス「Bridge
+                  Backup」をリリース</span
+                >
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <time datetime="2026-07-15">2026.07.15</time>
+                <span class="news__cat news__cat--event">イベント</span>
+                <span class="news__title"
+                  >水戸商工会議所にて「はじめてのDX」セミナーに登壇します</span
+                >
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <time datetime="2026-06-30">2026.06.30</time>
+                <span class="news__cat news__cat--info">お知らせ</span>
+                <span class="news__title"
+                  >夏季休業のお知らせ（8月13日〜8月16日）</span
+                >
+              </a>
+            </li>
+          </ul>
+          <div class="news__more fade-in">
+            <a href="#" class="btn btn--outline">ニュース一覧を見る</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 会社概要 -->
+      <section class="company section" id="company">
+        <div class="container">
+          <h2 class="section__title fade-in">会社概要<span>COMPANY</span></h2>
+          <div class="company__inner">
+            <img
+              src="images/company.svg"
+              alt="オフィス外観"
+              class="company__img fade-in"
+            />
+            <table class="company__table fade-in">
+              <tbody>
+                <tr>
+                  <th>会社名</th>
+                  <td>株式会社ネクストブリッジ</td>
+                </tr>
+                <tr>
+                  <th>所在地</th>
+                  <td>
+                    〒310-0000<br />茨城県水戸市〇〇町4-5-6 ブリッジビル3F
+                  </td>
+                </tr>
+                <tr>
+                  <th>設立</th>
+                  <td>2012年4月</td>
+                </tr>
+                <tr>
+                  <th>代表者</th>
+                  <td>代表取締役 橋本 大樹</td>
+                </tr>
+                <tr>
+                  <th>資本金</th>
+                  <td>3,000万円</td>
+                </tr>
+                <tr>
+                  <th>従業員数</th>
+                  <td>85名（2026年4月現在）</td>
+                </tr>
+                <tr>
+                  <th>事業内容</th>
+                  <td>Webサイト制作、システム開発、ITインフラ構築・運用支援</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 採用 -->
+      <section class="recruit" id="recruit">
+        <div class="container recruit__inner fade-in">
+          <p class="recruit__sub">RECRUIT</p>
+          <h2 class="recruit__title">一緒に働く仲間を募集しています</h2>
+          <p class="recruit__text">
+            エンジニア、デザイナー、ディレクター。経験者はもちろん、未経験からの挑戦も歓迎します。
+          </p>
+          <div class="recruit__btns">
+            <a href="#" class="btn btn--white">新卒採用</a>
+            <a href="#" class="btn btn--ghost">中途採用</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- お問い合わせ -->
+      <section class="contact section" id="contact">
+        <div class="container">
+          <h2 class="section__title fade-in">
+            お問い合わせ<span>CONTACT</span>
+          </h2>
+          <p class="section__lead fade-in">
+            サービスに関するご相談・お見積りは、下記フォームよりお気軽にお問い合わせください。
+          </p>
+
+          <form class="form fade-in" id="contactForm" novalidate>
+            <div class="form__row">
+              <label for="company">会社名</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                placeholder="例）株式会社サンプル"
+              />
+            </div>
+            <div class="form__row">
+              <label for="name"
+                >お名前<span class="form__required">必須</span></label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="例）山田 太郎"
+                data-required
+              />
+              <p class="form__error"></p>
+            </div>
+            <div class="form__row">
+              <label for="email"
+                >メールアドレス<span class="form__required">必須</span></label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="例）example@example.com"
+                data-required
+                data-type="email"
+              />
+              <p class="form__error"></p>
+            </div>
+            <div class="form__row">
+              <label for="tel">電話番号</label>
+              <input
+                type="tel"
+                id="tel"
+                name="tel"
+                placeholder="例）029-000-0000"
+                data-type="tel"
+              />
+              <p class="form__error"></p>
+            </div>
+            <div class="form__row">
+              <span class="form__label"
+                >お問い合わせ種別<span class="form__required">必須</span></span
+              >
+              <div class="form__radios" data-required data-type="radio">
+                <label
+                  ><input type="radio" name="type" value="web" />Web制作</label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    name="type"
+                    value="system"
+                  />システム開発</label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    name="type"
+                    value="infra"
+                  />ITインフラ</label
+                >
+                <label
+                  ><input type="radio" name="type" value="other" />その他</label
+                >
+              </div>
+              <p class="form__error"></p>
+            </div>
+            <div class="form__row">
+              <label for="message"
+                >お問い合わせ内容<span class="form__required">必須</span></label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="6"
+                placeholder="ご相談内容をできるだけ具体的にご記入ください"
+                data-required
+              ></textarea>
+              <p class="form__error"></p>
+            </div>
+            <div class="form__row form__row--agree">
+              <label class="form__check"
+                ><input
+                  type="checkbox"
+                  id="agree"
+                  name="agree"
+                  data-required
+                  data-type="check"
+                /><a href="#">個人情報の取り扱い</a>に同意する<span
+                  class="form__required"
+                  >必須</span
+                ></label
+              >
+              <p class="form__error"></p>
+            </div>
+            <div class="form__submit">
+              <button type="submit" class="btn btn--primary">送信する</button>
+            </div>
+          </form>
+
+          <div class="form__thanks" id="formThanks" hidden>
+            <h3>お問い合わせありがとうございます</h3>
+            <p>
+              内容を確認のうえ、担当者より2営業日以内にご連絡いたします。<br />お急ぎの場合はお電話（029-000-0000）にてお問い合わせください。
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__col footer__col--info">
+            <p class="footer__logo">NEXT BRIDGE</p>
+            <p class="footer__address">
+              株式会社ネクストブリッジ<br />〒310-0000 茨城県水戸市〇〇町4-5-6
+              ブリッジビル3F<br />TEL 029-000-0000（平日 9:00〜18:00）
+            </p>
+          </div>
+          <div class="footer__col">
+            <p class="footer__heading">サイトマップ</p>
+            <ul class="footer__links">
+              <li><a href="#service">事業内容</a></li>
+              <li><a href="#works">実績</a></li>
+              <li><a href="#news">ニュース</a></li>
+              <li><a href="#company">会社概要</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <p class="footer__heading">採用・お問い合わせ</p>
+            <ul class="footer__links">
+              <li><a href="#recruit">採用情報</a></li>
+              <li><a href="#contact">お問い合わせ</a></li>
+              <li><a href="#">プライバシーポリシー</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer__copy">
+          &copy; 2026 NEXT BRIDGE Inc. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
+    <a href="#" class="totop" id="totop" aria-label="ページの先頭へ戻る">↑</a>
+
+    <script src="script.js"></script>
+  </body>
+</html>
